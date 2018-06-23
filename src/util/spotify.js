@@ -62,14 +62,17 @@ savePlayList(playlistName, tracks) {
 
     const accessToken = this.getAccessToken();
     const headers = {Authorization: `Bearer ${accessToken}`}
+    let userId;
+    let playlistId;
 
     return fetch("https://api.spotify.com/v1/me",
     {headers: headers})
     .then(response =>  response.json())
-    .then(jsonResponse => jsonResponse.id)
+    .then(jsonResponse => {
+      userId = jsonResponse.id;
 
 //create new playlist and get its id
-    .then(userId => {
+
       return fetch(`https://api.spotify.com//v1/users/${userId}/playlists`,
         {headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -80,7 +83,7 @@ savePlayList(playlistName, tracks) {
       })
     .then(response => response.json())
     .then(jsonResponse => {
-      let playlistId = jsonResponse.id
+      playlistId = jsonResponse.id
 //add tracks to a playlist
       return fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}tracks`,
           {headers: {
