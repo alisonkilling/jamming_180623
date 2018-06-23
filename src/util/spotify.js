@@ -70,7 +70,7 @@ savePlayList(playlistName, tracks) {
 
 //create new playlist and get its id
     .then(userId => {
-      fetch(`https://api.spotify.com//v1/users/${userId}/playlists`,
+      return fetch(`https://api.spotify.com//v1/users/${userId}/playlists`,
         {headers: {
           Authorization: `Bearer ${accessToken}`,
           //ContentType: 'application/json'
@@ -82,7 +82,7 @@ savePlayList(playlistName, tracks) {
     .then(jsonResponse => {
       let playlistId = jsonResponse.id
 //add tracks to a playlist
-      fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}tracks`,
+      return fetch(`https://api.spotify.com/v1/users/${userId}/playlists/${playlistId}tracks`,
           {headers: {
             Authorization: `Bearer ${accessToken}`,
           //  ContentType: 'application/json'
